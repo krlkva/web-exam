@@ -4,18 +4,16 @@ const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 
 const app = express();
-const LOGIN = 'lisakorolkova'; // Замените на ваш логин
+const LOGIN = 'lisakorolkova'; 
 
 // Маршрут /login
 app.get('/login', (req, res) => {
-    res.set('Accept', 'text/plain');
     res.type('text/plain');
     res.send(LOGIN);
 });
 
 // Маршрут /zipper - форма
 app.get('/zipper', (req, res) => {
-    res.set('Accept', 'text/html');
     res.type('text/html');
     res.send(`
         <!DOCTYPE html>
@@ -51,8 +49,7 @@ app.post('/zipper', upload.single('file'), (req, res) => {
         
         res.set({
             'Content-Type': 'application/gzip',
-            'Content-Disposition': 'attachment; filename=result.gz',
-            'Accept': 'application/gzip, */*'
+            'Content-Disposition': 'attachment; filename=result.gz'
         });
         res.send(compressed);
     });
@@ -61,6 +58,4 @@ app.post('/zipper', upload.single('file'), (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
-    console.log(`Login route: /login`);
-    console.log(`Zipper route: /zipper`);
 });
